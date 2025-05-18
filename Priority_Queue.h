@@ -79,16 +79,16 @@ public:
             swap(heap[index], heap[heap.size() - 1]);
             heap.pop_back();
             heapifyDown(0);
-            std::cout << "Value deleted\n";
         }
         else
-            std::cout << "Value doesn't exist in heap\n";
+            throw std::runtime_error("PriorityQueue is empty");
     }
 
     void buildHeap(const vector<T>& items)  {
-        heap.clear();
-        for (const T& item  : items) {
-            push(item);
+        heap = items;
+        int n = heap.size();
+        for (int i  = n / 2 - 1; i >= 0; --i) {
+            heapifyDown(i);
         }
     }
 
