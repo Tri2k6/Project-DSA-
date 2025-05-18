@@ -86,9 +86,10 @@ public:
     }
 
     void buildHeap(const vector<T>& items)  {
-        heap.clear();
-        for (const T& item  : items) {
-            push(item);
+        heap = items;
+        int n = heap.size();
+        for (int i  = n / 2 - 1; i >= 0; --i) {
+            heapifyDown(i);
         }
     }
 
