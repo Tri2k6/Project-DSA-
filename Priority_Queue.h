@@ -74,14 +74,17 @@ public:
         while (index < heap.size() && heap[index] != value)
             index++;
 
-        if (index < heap.size())
-        {
-            swap(heap[index], heap[heap.size() - 1]);
-            heap.pop_back();
-            heapifyDown(0);
-        }
-        else
+        if (index == heap.size()) {
             throw std::runtime_error("PriorityQueue is empty");
+        }
+
+        swap(heap[index], heap.back());
+        heap.pop_back();
+
+        if (index < heap.size()) {
+            heapifyDown(index);
+            heapifyUp(index);
+        }
     }
 
     void buildHeap(const vector<T>& items)  {
