@@ -52,15 +52,13 @@ public:
         heapifyUp(heap.size() - 1);
     }
 
-    int pop() {
+    void pop() {
         if (isEmpty()) throw std::runtime_error("PriorityQueue is empty");
-        T val = heap[0];
         heap[0] = heap.back();
         heap.pop_back();
         if (!heap.empty()) {
             heapifyDown(0);
         }
-        return val;
     }
 
     const T& top() const {
@@ -68,27 +66,31 @@ public:
         return heap[0];
     }
 
-    void remove(int value)
+    bool remove(const T& value)
     {
         int index = 0;
         while (index < heap.size() && heap[index] != value)
             index++;
 
-        if (index < heap.size())
-        {
-            swap(heap[index], heap[heap.size() - 1]);
-            heap.pop_back();
-            heapifyDown(0);
-            std::cout << "Value deleted\n";
+        if (index == heap.size()) {
+            return false;
         }
-        else
-            std::cout << "Value doesn't exist in heap\n";
+
+        swap(heap[index], heap.back());
+        heap.pop_back();
+
+        if (index < heap.size()) {
+            heapifyDown(index);
+            heapifyUp(index);
+        }
+        return true;
     }
 
     void buildHeap(const vector<T>& items)  {
-        heap.clear();
-        for (const T& item  : items) {
-            push(item);
+        heap = items;
+        int n = heap.size();
+        for (int i  = n / 2 - 1; i >= 0; --i) {
+            heapifyDown(i);
         }
     }
 
