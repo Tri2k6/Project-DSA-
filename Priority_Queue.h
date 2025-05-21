@@ -103,8 +103,8 @@ public:
 
     void print() const {
         for (const T& val : heap) {
-            //cout << val << " ";
+            cout << val << " ";
         }
-        //cout << "\n";
+        cout << "\n";
     }
 };
